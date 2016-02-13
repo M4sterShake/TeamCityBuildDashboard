@@ -1,0 +1,24 @@
+﻿html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 62.5%;
+    font-family: 'Open Sans', sans-serif;
+    font-size:1.9rem;
+    font-weight:lighter;
+    min-width: 250px;
+    overflow-x: hidden;
+    background-color: #272822;
+    color: #E6E6E6; 
+}
+
+h1 {
+    font-size: 1.8rem;
+    font-weight: normal;
+}
+
+a {
+    color: #A6A6A6;
+    text-decoration: none;
+}

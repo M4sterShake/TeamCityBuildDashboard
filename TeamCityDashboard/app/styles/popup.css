@@ -1,0 +1,10 @@
+﻿#main-menu {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+#main-menu li {
+    line-height: 2.5rem;
+    font-size: 1.5rem;
+}
