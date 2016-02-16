@@ -1,1 +1,46 @@
-﻿.form-labels label { display: block;}
+﻿body {
+    min-width: 500px;
+    width: 960px;
+}
+
+#add-server-form {
+    display: none;
+}
+
+.tc-url { width: 25rem; }
+
+#add-server-button, #update-server-button { margin-top: 2rem;}
+
+#tc-server-list {
+    display: none;
+    list-style: none;
+    padding-left: 0;
+    margin-top: 1rem;
+}
+
+#server-list {
+    width: 50%;
+    float: left;
+    margin-bottom: 1rem;
+}
+
+#server-settings {
+    border-left: 1px solid #666;
+    margin-bottom: 1rem;
+    width: 50%;
+    float: left;
+    padding: 0 1rem;
+    display: none;
+}
+
+#projects-and-builds-list-container ul{
+    list-style: none;
+}
+
+#projects-and-builds-list-container li.closed ~ ul{
+    display: none;
+}
+
+#projects-and-builds-list-container > ul{
+    padding-left: 0;
+}

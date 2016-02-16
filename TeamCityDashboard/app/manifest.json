@@ -12,9 +12,11 @@
   },
   "options_ui": {
     "page": "pages/settings.html",
-    "chrome_style": true
+    "chrome_style": false
   },
   "permissions": [
-    "contextMenus"
+    "contextMenus",
+    "storage",
+    "http://*/"
   ]
 }

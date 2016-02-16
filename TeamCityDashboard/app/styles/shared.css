@@ -3,22 +3,144 @@
 }
 
 body {
-    font-size: 62.5%;
     font-family: 'Open Sans', sans-serif;
-    font-size:1.9rem;
+    font-size:1.7rem;
     font-weight:lighter;
-    min-width: 250px;
     overflow-x: hidden;
     background-color: #272822;
-    color: #E6E6E6; 
+    color: #E6E6E6;
+    padding: 1rem;
 }
 
 h1 {
-    font-size: 1.8rem;
-    font-weight: normal;
+    font-size: 3.5rem;
+    font-weight: lighter;
+    margin-top: 0;
+    margin-bottom: 4rem;
 }
 
-a {
+h2 {
+    font-size: 3rem;
+    font-weight: lighter;
+    margin: 0 0 1.5rem 0;
+}
+
+h3 {
+    font-size: 2.5rem;
+    font-weight: lighter;
+    margin: 2rem 0;
+}
+
+h4 {
+    font-size: 2rem;
+    font-weight: lighter;
+}
+
+a, a:visited {
+    color: #E6E6E6;
+    text-decoration: none;
+}
+
+a:link {
+    color: #E6E6E6 !important;
+    text-decoration: none !important;
+}
+
+a:hover {
     color: #A6A6A6;
     text-decoration: none;
+}
+
+.fa {
+    padding-right:1rem;
+}
+
+.fa-plus {
+    color:#4F4
+}
+
+.fa-server {
+    color: #E96F0C;
+}
+
+.fa-cogs, .fa-cog{
+    color: #5F9EA0;
+}
+
+.fa-cubes, .fa-cube {
+    color: #5F9EA0;
+}
+
+input {
+    line-height: 1.7rem;
+    height: 3.5rem;
+    display: inline;
+}
+
+textarea, input { outline: none; }
+
+label {
+    display: inline-block;
+    vertical-align: bottom;
+    margin-right: 1rem;
+    font-weight: lighter;
+    margin-bottom: 0;
+}
+
+label.error {
+    color: #F44;
+    margin-left: 1rem;
+}
+
+input[type=text], input[type=url], input[type=password] {
+	background-color: #272822;
+	color: #E6E6E6;
+	border: none;
+    border-bottom: 1px solid #A6A6A6;
+    padding: 2px 5px;
+    transition:.5s;
+}
+
+input[type=text]:hover, input[type=url]:hover, input[type=password]:hover{
+    border-bottom: 1px solid #E6E6E6;
+    transition:.3s;
+}
+
+input[type=text]:focus, input[type=url]:focus, input[type=password]:focus{
+  transition:.3s;
+}
+
+input[type=submit] {
+    border: none;
+    background-color:#1c1c1c;
+    color: #E6E6E6;
+    outline:none;
+    transition:.3s;
+    padding: 7px;
+}
+
+input[type=submit]:hover {
+    color:#272822;
+    background-color:#A6A6A6; 
+    transition:.3s;
+}
+
+input[type=submit]:active {
+    background-color:#FFF;
+}
+
+.form-row {
+    display: block;
+}
+
+/* Error messages */
+.error-message {
+    background-color: #ff4444;
+    display: none;
+}
+
+.error-message .close-button {
+    color: black;
+    font-weight: bold;
+    margin-left: 2rem;
 }

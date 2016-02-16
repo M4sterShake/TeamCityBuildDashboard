@@ -1,10 +1,21 @@
-﻿#main-menu {
+﻿body {
+    min-width: 250px;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #666;
+}
+
+#main-menu {
     list-style: none;
     padding: 0;
     margin-bottom: 0;
 }
 
 #main-menu li {
-    line-height: 2.5rem;
-    font-size: 1.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 1.8rem;
 }
