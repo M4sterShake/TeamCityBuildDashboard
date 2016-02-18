@@ -42,6 +42,7 @@
     <Content Include="app\img\icon.png" />
     <Content Include="app\pages\dashboard.html" />
     <Content Include="app\pages\settings.html" />
+    <Content Include="app\scripts\lib\handlebars.js" />
     <Content Include="app\scripts\lib\jquery.validate.js" />
     <Content Include="app\scripts\ServerInfo.js" />
     <Content Include="app\scripts\settings.js" />
@@ -60,6 +61,7 @@
     <Content Include="index.htm" />
     <Content Include="Properties\build\ligershark.chrome.targets" />
     <Content Include="screenshots\readme.txt" />
+    <Content Include="app\pages\templates\ServerInfoTemplate.handlebars" />
     <None Include="scripts\_references.js" />
     <None Include="scripts\chrome-api-vsdoc.js" />
   </ItemGroup>
