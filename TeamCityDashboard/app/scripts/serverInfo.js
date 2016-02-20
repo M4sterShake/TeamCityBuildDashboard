@@ -1,6 +1,8 @@
 ﻿ServerInfo = function () {
   this.Server = null;
-  this.teamCityApi = null;
+  this.dataStore = null;
+  this.TeamCityApi = null;
+  this.ServerListPage = null;
 
   var that = this,
     serverInfoRootId = "#server-settings",
@@ -23,13 +25,30 @@
   }
 
   function updateServerSubmitHandler(form) {
-    
+    var server = {
+      originalDisplayName: $(form).find(".tc-original-display-name").val(),
+      displayName: $(form).find(".tc-display-name").val(),
+      url: $(form).find(".tc-url").val(),
+      username: $(form).find(".tc-user").val(),
+      password: $(form).find(".tc-pass").val()
+    }
+
+    that.DataStore.UpdateServer(server, function(err) {
+      if (err) {
+        //show error
+        return;
+      }
+
+      $("#tc-display-name-header-text").text(server.displayName);
+      that.ServerListPage.Show();
+      //show success
+    });
   }
 
   function displayServerProjects(targetElement) {
     var $targetElement = $(targetElement);
     $("<div class='la-ball-scale-ripple-multiple'><div></div><div></div><div></div></div>").insertBefore($targetElement);
-    that.teamCityApi.GetProjectsForServer(that.Server, function (err, projects) {
+    that.TeamCityApi.GetProjectsForServer(that.Server, function (err, projects) {
       $targetElement.parent().find(".la-ball-scale-ripple-multiple").remove();
       if (err) {
         displayError("failed to send get request to " + that.server.url);
@@ -63,7 +82,7 @@
     $(this).toggleClass("closed");
     var $projectListItem = $(e.target).is("li") ? $(e.target) : $(e.target).parent("li");
     var projectName = $projectListItem.text();
-    that.teamCityApi.GetBuildsForProject(that.Server, projectName, function (err, builds) {
+    that.TeamCityApi.GetBuildsForProject(that.Server, projectName, function (err, builds) {
       if (builds != null && builds.length > 0) {
         var $projectList = $projectListItem.parent("ul");
         $projectList.find('.build-list').remove();
@@ -76,9 +95,11 @@
   }
 }
 
-ServerInfo.init = function (server, teamCityApi) {
+ServerInfo.init = function (server, dataStore, teamCityApi, serverListPage) {
   var serverInfo = new ServerInfo();
   serverInfo.Server = server;
-  serverInfo.teamCityApi = teamCityApi;
+  serverInfo.DataStore = dataStore;
+  serverInfo.TeamCityApi = teamCityApi;
+  serverInfo.ServerListPage = serverListPage;
   return serverInfo;
 };

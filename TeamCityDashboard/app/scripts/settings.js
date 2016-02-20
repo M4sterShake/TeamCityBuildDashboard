@@ -11,7 +11,7 @@
       switchCurrentSettingsPage($currentSettingsPage, $nextSettingsPages.first());
       moveOffScreenLeft($currentSettingsPage);
       moveOnScreenLeft($nextSettingsPages.first());
-      $(".back-button").fadeTo(animationSpeed /2, 1, function() {
+      $(".back-button").fadeTo(animationSpeed, 1, "easeOutQuart", function() {
         $(".back-button").removeClass("unclickable");
       });
     }
@@ -25,7 +25,7 @@
       moveOffScreenRight($currentSettingsPage);
       moveOnScreenRight($prevSettingsPages.first());
       if ($("#container .current-settings-page").prevAll().length === 0) {
-        $(".back-button").fadeTo(animationSpeed /2, 0, function() {
+        $(".back-button").fadeTo(animationSpeed, 0, "easeOutQuart", function() {
           $(".back-button").addClass("unclickable");
         });
       }

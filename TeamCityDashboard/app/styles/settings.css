@@ -2,6 +2,7 @@
     min-width: 500px;
     width: 900px;
     height: 500px;
+    padding: 1.5rem;
 }
 
 #add-server-form {
@@ -53,4 +54,8 @@
 
 .project-list li {
     cursor: pointer;
+}
+
+li {
+    margin-bottom: 0.75rem;
 }

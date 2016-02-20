@@ -9,13 +9,18 @@
   var serverListElement = null;
 
   this.Show = function(containerId) {
-    if ($(serverListRootId).length) {
-      $(serverListRootId).remove();
-    }
-
     serverListElement = $(Handlebars.templates['ServerListTemplate']());
-    initEventHandlers(serverListElement);
-    $(containerId).append(serverListElement);
+    
+
+    if ($(serverListRootId).length) {
+      initEventHandlers();
+      $(serverListRootId).html(serverListElement.html());
+    } else {
+      initEventHandlers(serverListElement);
+      initGlobalEventHandlers();
+      $(containerId).append(serverListElement);
+    }
+    
     serverListElement.fadeIn();
     that.DataStore.GetServers(function (servers) {
       displayServers(servers);
@@ -24,8 +29,11 @@
 
   function initEventHandlers(serverListElement) {
     serverListElement.find("#add-server-form").validate({ submitHandler: addServerSubmitHandler });
-    $("body").on("click", "#tc-server-list .tc-server-list-item a", serverListItemEventHandler);
     serverListElement.find("#add-new-server-link").on("click", toggleNewServerForm);
+  }
+
+  function initGlobalEventHandlers() {
+    $("body").on("click", "#tc-server-list .tc-server-list-item a", serverListItemEventHandler);
   }
 
   function addServerSubmitHandler(form) {
@@ -76,7 +84,7 @@
         return;
       }
 
-      ServerInfo.init(serverInfo, that.TeamCityApi).Show("#container");
+      ServerInfo.init(serverInfo, that.DataStore, that.TeamCityApi, that).Show("#container");
       that.SettingsPage.moveForwardSettingsPage();
     });
   }
