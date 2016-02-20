@@ -52,6 +52,7 @@
     <Content Include="app\scripts\DataStore.js" />
     <Content Include="app\scripts\TeamCityApi.js" />
     <Content Include="app\styles\bootstrap.css" />
+    <Content Include="app\styles\loadingSpinner.css" />
     <Content Include="app\styles\popup.css" />
     <Content Include="app\pages\popup.html" />
     <Content Include="app\scripts\popup.js" />

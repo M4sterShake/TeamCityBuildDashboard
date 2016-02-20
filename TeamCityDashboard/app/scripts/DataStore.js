@@ -29,7 +29,8 @@
     that.GetServers(function (storedServers) {
       if (storedServers != null) {
         if (!serverAlreadyExists(storedServers, server)) {
-          chrome.storage.sync.set({ 'teamCityServers': storedServers.push() }, function() {
+          storedServers.push(server);
+          chrome.storage.sync.set({ 'teamCityServers': storedServers}, function() {
             handleErrors(callback);
           });
         } else {

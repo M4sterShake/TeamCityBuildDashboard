@@ -1,6 +1,7 @@
 ﻿ServerList = function() {
   this.DataStore = null;
   this.TeamCityApi = null;
+  this.SettingsPage = null;
 
   var that = this;
   var serverListRootId = "#server-list";
@@ -53,6 +54,10 @@
     }
   }
 
+  function clearNewServerForm() {
+    $("#add-server-form input[type='text'], #add-server-form input[type='url'], #add-server-form input[type='password']").val("");
+  }
+
   function serverListItemEventHandler(e) {
     e.preventDefault();
     displayServer($(this).text());
@@ -65,13 +70,14 @@
         return;
       }
 
-      fadeOut();
       ServerInfo.init(serverInfo, that.TeamCityApi).Show("#container");
+      that.SettingsPage.moveForwardSettingsPage();
     });
   }
 
   function displayServers(servers) {
     if (servers != null) {
+      $(serverListUlId).html("");
       for (var i = 0; i < servers.length; i++) {
         $(serverListUlId).append("<li class='tc-server-list-item'><a href='#'><i class='fa fa-server'></i>" + servers[i].displayName + "</a><li>");
       }
@@ -95,24 +101,19 @@
       }
 
       toggleNewServerForm();
+      clearNewServerForm();
       that.DataStore.GetServers(function (servers) {
         displayServers(servers);
         displayServer(serverInfo.displayName);
       });
     });
   }
-
-  function fadeOut() {
-    serverListElement.animate({
-      left: 0 - $(window).width(),
-      opacity: 0
-    }, 1000);
-  }
 }
 
-ServerList.init = function (dataStore, teamCityApi) {
+ServerList.init = function (dataStore, teamCityApi, settingsPage) {
   var serverList = new ServerList();
   serverList.DataStore = dataStore;
   serverList.TeamCityApi = teamCityApi;
+  serverList.SettingsPage = settingsPage;
   return serverList;
 };

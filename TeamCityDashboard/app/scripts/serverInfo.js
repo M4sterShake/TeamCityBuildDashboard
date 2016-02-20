@@ -2,8 +2,9 @@
   this.Server = null;
   this.teamCityApi = null;
 
-  var that = this;
-  var serverInfoRootId = "#server-settings";
+  var that = this,
+    serverInfoRootId = "#server-settings",
+    $serverInfoElement = null;
 
   this.Show = function(containerId) {
     if ($(serverInfoRootId).length) {
@@ -11,25 +12,30 @@
     }
 
     var template = Handlebars.templates['ServerInfoTemplate'](that.Server);
-    $(containerId).append(template);
-    $(serverInfoRootId).css("left", $(window).width());
-    $(serverInfoRootId).css("opacity", "0");
-    $(serverInfoRootId).show();
-
-    $(serverInfoRootId).animate({
-      left: 0,
-      opacity: 1
-    }, 1350, "easeOutExpo");
+    $serverInfoElement = $(template);
+    $(containerId).append($serverInfoElement);
+    initEventHandlers();
     displayServerProjects("#projects-and-builds-list-container");
   }
 
+  function initEventHandlers() {
+    $serverInfoElement.find("#update-server-form").validate({ submitHandler: updateServerSubmitHandler });
+  }
+
+  function updateServerSubmitHandler(form) {
+    
+  }
+
   function displayServerProjects(targetElement) {
+    var $targetElement = $(targetElement);
+    $("<div class='la-ball-scale-multiple'><div></div><div></div><div></div></div>").insertBefore($targetElement);
     that.teamCityApi.GetProjectsForServer(that.Server, function (err, projects) {
+      $targetElement.parent().find(".la-ball-scale-multiple").remove();
       if (err) {
         displayError("failed to send get request to " + that.server.url);
         return;
       }
-      var $targetElement = $(targetElement);
+      
       $targetElement.html("");
       displayProjectTree(projects, null, $targetElement);
     });

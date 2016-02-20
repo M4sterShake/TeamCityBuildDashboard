@@ -12,11 +12,15 @@ body {
     padding: 1rem;
 }
 
+#container {
+    position: relative;
+}
+
 h1 {
     font-size: 3.5rem;
     font-weight: lighter;
     margin-top: 0;
-    margin-bottom: 4rem;
+    margin-bottom: 1rem;
 }
 
 h2 {
@@ -71,6 +75,28 @@ a:hover {
     color: #5F9EA0;
 }
 
+.fa-chevron-left {
+    color: #4285f4;
+}
+
+.back-button {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+    max-width: 7rem;
+    opacity: 0;
+    margin-left: 0;
+    transition: margin-left 0.5s;
+}
+
+.back-button.unclickable {
+    cursor: default;
+}
+
+.back-button:hover {
+    margin-left: -0.5rem;
+}
+
 input {
     line-height: 1.7rem;
     height: 3.5rem;
@@ -90,6 +116,7 @@ label {
 label.error {
     color: #F44;
     margin-left: 1rem;
+    font-size: 1.4rem;
 }
 
 input[type=text], input[type=url], input[type=password] {

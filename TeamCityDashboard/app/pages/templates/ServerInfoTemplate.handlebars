@@ -1,6 +1,6 @@
-﻿<div id="server-settings">
+﻿<div id="server-settings" class="settings-page">
   <h2 id="tc-display-name-header"><i class='fa fa-server'></i><span id="tc-display-name-header-text">{{displayName}}</span></h2>
-  <form action="#" id="update-server-form" name="add-server-form">
+  <form action="#" id="update-server-form" name="add-server-form" class="col-sm-6">
     <div class="form-row">
       <input type="text" name="tc-display-name" class="tc-display-name" placeholder="Display Name" value="{{displayName}}" />
     </div>
@@ -15,6 +15,8 @@
     </div>
     <input type="submit" name="update-server-submit" id="update-server-button" value="Update Server" />
   </form>
-  <h3>Projects</h3>
-  <div id="projects-and-builds-list-container"></div>
+  <div id="server-projects" class="col-sm-6">
+    <h3 id="projects-header">Projects</h3>
+    <div id="projects-and-builds-list-container"></div>
+  </div>
 </div>
