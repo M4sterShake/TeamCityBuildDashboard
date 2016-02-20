@@ -1,6 +1,7 @@
 ﻿body {
     min-width: 500px;
     width: 960px;
+    height: 600px;
 }
 
 #add-server-form {
@@ -19,18 +20,20 @@
 }
 
 #server-list {
-    width: 50%;
+    width: 100%;
     float: left;
     margin-bottom: 1rem;
+    position: absolute;
 }
 
 #server-settings {
     border-left: 1px solid #666;
     margin-bottom: 1rem;
-    width: 50%;
+    width: 100%;
     float: left;
     padding: 0 1rem;
     display: none;
+    position: absolute;
 }
 
 #projects-and-builds-list-container ul{

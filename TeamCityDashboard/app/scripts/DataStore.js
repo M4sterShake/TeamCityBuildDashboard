@@ -1,4 +1,4 @@
-﻿State = function() {
+﻿DataStore = function() {
   
   this.GetServers = function(callback) {
     chrome.storage.sync.get("teamCityServers", function (storedServers) {
@@ -71,6 +71,6 @@
   }
 }
 
-State.init = function () {
-  return new State();
+DataStore.init = function () {
+  return new DataStore();
 };

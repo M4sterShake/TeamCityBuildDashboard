@@ -12,7 +12,14 @@
 
     var template = Handlebars.templates['ServerInfoTemplate'](that.Server);
     $(containerId).append(template);
-    $(serverInfoRootId).fadeIn();
+    $(serverInfoRootId).css("left", $(window).width());
+    $(serverInfoRootId).css("opacity", "0");
+    $(serverInfoRootId).show();
+
+    $(serverInfoRootId).animate({
+      left: 0,
+      opacity: 1
+    }, 1350, "easeOutExpo");
     displayServerProjects("#projects-and-builds-list-container");
   }
 
@@ -22,7 +29,7 @@
         displayError("failed to send get request to " + that.server.url);
         return;
       }
-      $targetElement = $(targetElement);
+      var $targetElement = $(targetElement);
       $targetElement.html("");
       displayProjectTree(projects, null, $targetElement);
     });

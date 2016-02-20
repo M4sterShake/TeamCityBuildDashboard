@@ -1,0 +1,23 @@
+﻿<div id="server-list">
+  <h2>TeamCity Servers</h2>
+  <p>
+    <a href="#" id="add-new-server-link"><i class="fa fa-plus"></i>New Server</a>
+  </p>
+  <form action="#" id="add-server-form" name="add-server-form">
+    <div class="form-row">
+      <input type="text" name="tc-display-name" class="tc-display-name" placeholder="Display Name" />
+    </div>
+    <div class="form-row">
+      <input type="url" name="tc-url" class="tc-url" placeholder="TeamCity URL" />
+    </div>
+    <div class="form-row">
+      <input type="text" name="tc-user" class="tc-user" placeholder="Username" />
+    </div>
+    <div class="form-row">
+      <input type="password" name="tc-pass" class="tc-pass" placeholder="Password" />
+    </div>
+    <input type="submit" name="add-server-submit" id="add-server-button" value="Add Server" />
+    <span class="error-message"><span class="message"></span><span class="close-button">close</span></span>
+  </form>
+  <ul id="tc-server-list"></ul>
+</div>

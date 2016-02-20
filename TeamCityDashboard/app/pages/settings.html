@@ -10,8 +10,8 @@
     <link rel="stylesheet" type="text/css" href="../styles/settings.css" />
   </head>
   <body>
-    <h1><i class="fa fa-cog"></i>TeamCity Dashboard Settings
-    </h1>
+    <h1><i class="fa fa-cog"></i>TeamCity Dashboard Settings</h1>
+    <a href="#">Back</a>
     <div id="container">
       <div id="server-list">
         <h2>TeamCity Servers</h2>
@@ -36,38 +36,17 @@
         </form>
         <ul id="tc-server-list"></ul>
       </div>
-
-      <!--
-      <div id="server-settings">
-        <h2 id="tc-display-name-header"><i class='fa fa-server'></i><span id="tc-display-name-header-text"></span></h2>
-        <form action="#" id="update-server-form" name="add-server-form">
-          <div class="form-row">
-            <input type="text" name="tc-display-name" class="tc-display-name" placeholder="Display Name"/>
-          </div>
-          <div class="form-row">
-            <input type="url" name="tc-url" class="tc-url" placeholder="TeamCity URL"/>
-          </div>
-          <div class="form-row">
-            <input type="text" name="tc-user" class="tc-user" placeholder="Username"/>
-          </div>
-          <div class="form-row">
-            <input type="password" name="tc-pass" class="tc-pass" placeholder="Password"/>
-          </div>
-          <input type="submit" name="update-server-submit" id="update-server-button" value="Update Server"/>
-        </form>
-        <h3>Projects</h3>
-        <div id="projects-and-builds-list-container"></div>
-      </div>-->
     </div>
 
-    <!--Handlebars templates-->
     <script type="text/javascript" src="../scripts/lib/jquery.js"></script>
     <script type="text/javascript" src="../scripts/lib/jquery.validate.js"></script>
+    <script type="text/javascript" src="../scripts/lib/jquery-ui.js"></script>
     <script type="text/javascript" src="../scripts/lib/handlebars.js"></script>
     <script type="text/javascript" src="../pages/templates/handlebarsTemplates.js"></script>
-    <script type="text/javascript" src="../scripts/state.js"></script>
+    <script type="text/javascript" src="../scripts/DataStore.js"></script>
     <script type="text/javascript" src="../scripts/teamCityApi.js"></script>
     <script type="text/javascript" src="../scripts/ServerInfo.js"></script>
+    <script type="text/javascript" src="../scripts/ServerList.js"></script>
     <script type="text/javascript" src="../scripts/settings.js"></script>
   </body>
 </html>
