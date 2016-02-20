@@ -28,9 +28,9 @@
 
   function displayServerProjects(targetElement) {
     var $targetElement = $(targetElement);
-    $("<div class='la-ball-scale-multiple'><div></div><div></div><div></div></div>").insertBefore($targetElement);
+    $("<div class='la-ball-scale-ripple-multiple'><div></div><div></div><div></div></div>").insertBefore($targetElement);
     that.teamCityApi.GetProjectsForServer(that.Server, function (err, projects) {
-      $targetElement.parent().find(".la-ball-scale-multiple").remove();
+      $targetElement.parent().find(".la-ball-scale-ripple-multiple").remove();
       if (err) {
         displayError("failed to send get request to " + that.server.url);
         return;
@@ -51,14 +51,28 @@
           }
           var targetList = targetElement.children("ul.project-list");
           var projectListItem = $("<li class='closed'><i class='fa fa-cubes'></i>" + projects[i].name + "</li>");
-          projectListItem.on("click", function (e) {
-            $(this).toggleClass("closed");
-          });
+          projectListItem.on("click", projectListItemEventHandler);
           targetList.append(projectListItem);
           displayProjectTree(projects, projects[i].id, targetList);
         }
       }
     }
+  }
+
+  function projectListItemEventHandler(e) {
+    $(this).toggleClass("closed");
+    var $projectListItem = $(e.target).is("li") ? $(e.target) : $(e.target).parent("li");
+    var projectName = $projectListItem.text();
+    that.teamCityApi.GetBuildsForProject(that.Server, projectName, function (err, builds) {
+      if (builds != null && builds.length > 0) {
+        var $projectList = $projectListItem.parent("ul");
+        $projectList.find('.build-list').remove();
+        $("<ul class='build-list'><ul>").insertAfter($projectListItem);
+        for (var i = 0; i < builds.length; i++) {
+          $projectList.find(".build-list").append("<li class='build-list-item'><i class='fa fa-cube'></i>" + builds[i].name + "</li>");
+        }
+      }
+    });
   }
 }
 

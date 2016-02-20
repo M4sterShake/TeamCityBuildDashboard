@@ -48,9 +48,15 @@
 
   function toggleNewServerForm() {
     if ($("#add-server-form").is(":visible")) {
-      $("#add-server-form").hide();
+      $("#add-server-form").slideUp({
+        duration: 1250,
+        easing: "easeOutQuart"
+      });
     } else {
-      $("#add-server-form").show();
+      $("#add-server-form").slideDown({
+        duration: 1250,
+        easing: "easeOutQuart"
+      });
     }
   }
 

@@ -6,6 +6,7 @@
 
 #add-server-form {
     display: none;
+    margin-bottom: 1rem;
 }
 
 .tc-url { width: 25rem; }
@@ -16,7 +17,6 @@
     display: none;
     list-style: none;
     padding-left: 0;
-    margin-top: 1rem;
 }
 
 .settings-page {
@@ -49,4 +49,8 @@
 
 #projects-and-builds-list-container > ul{
     padding-left: 0;
+}
+
+.project-list li {
+    cursor: pointer;
 }

@@ -1,6 +1,7 @@
 ﻿<div id="server-settings" class="settings-page">
   <h2 id="tc-display-name-header"><i class='fa fa-server'></i><span id="tc-display-name-header-text">{{displayName}}</span></h2>
   <form action="#" id="update-server-form" name="add-server-form" class="col-sm-6">
+    <input type="hidden" name="tc-original-display-name" value="{{displayName}}"/>
     <div class="form-row">
       <input type="text" name="tc-display-name" class="tc-display-name" placeholder="Display Name" value="{{displayName}}" />
     </div>
