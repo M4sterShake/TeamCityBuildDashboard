@@ -70,7 +70,7 @@
     moveOnScreen(settingsPageElement);
   }
 
-  function moveOffScreen(settingsPageElement, leftPos) {
+  function moveOffScreen(settingsPageElement, leftPos, callback) {
     settingsPageElement.css("opacity", 1);
     settingsPageElement.show();
     settingsPageElement.stop();
@@ -82,6 +82,9 @@
       "easeOutQuart",
       function () {
         settingsPageElement.hide();
+        if (callback != null) {
+          callback();
+        }
       }
     );
   }
@@ -91,8 +94,9 @@
   }
 
   function moveOffScreenRight(settingsPageElement) {
-    moveOffScreen(settingsPageElement, $(window).width());
-    settingsPageElement.remove();
+    moveOffScreen(settingsPageElement, $(window).width(), function() {
+      settingsPageElement.remove();
+    });
   }
 
   function switchCurrentSettingsPage(oldSettingsPage, newSettingsPage) {
