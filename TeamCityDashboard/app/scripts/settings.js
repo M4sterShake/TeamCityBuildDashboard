@@ -35,6 +35,21 @@
   init();
 
   function init() {
+    //Disable third party cookies
+    //var pref = chrome.privacy.websites.thirdPartyCookiesAllowed;
+    //pref.get({}, function (settings) {
+    //  console.log("Before");
+    //  console.log(settings);
+    //});
+    //pref.set({
+    //  'value': false,
+    //  'scope': 'regular'
+    //});
+    //pref.get({}, function (settings) {
+    //  console.log("After");
+    //  console.log(settings);
+    //});
+
     dataStore = DataStore.init();
     teamCityApi = TeamCityApi.init();
     initEventHandlers();
@@ -92,6 +107,7 @@
 
   function moveOffScreenRight(settingsPageElement) {
     moveOffScreen(settingsPageElement, $(window).width());
+    settingsPageElement.remove();
   }
 
   function switchCurrentSettingsPage(oldSettingsPage, newSettingsPage) {

@@ -10,6 +10,9 @@
     "default_popup": "pages/popup.html",
     "default_title": "TeamCity Dashboard"
   },
+  "background": {
+    "scripts": [ "scripts/background.js" ]
+  },
   "options_ui": {
     "page": "pages/settings.html",
     "chrome_style": false
@@ -17,6 +20,8 @@
   "permissions": [
     "contextMenus",
     "storage",
+    "cookies",
+    "privacy",
     "http://*/"
   ]
 }

@@ -10,11 +10,9 @@
 
   this.Show = function(containerId) {
     serverListElement = $(Handlebars.templates['ServerListTemplate']());
-    
-
     if ($(serverListRootId).length) {
-      initEventHandlers();
       $(serverListRootId).html(serverListElement.html());
+      initEventHandlers($(serverListRootId));
     } else {
       initEventHandlers(serverListElement);
       initGlobalEventHandlers();

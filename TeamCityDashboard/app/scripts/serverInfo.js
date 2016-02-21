@@ -9,14 +9,13 @@
     $serverInfoElement = null;
 
   this.Show = function(containerId) {
+    $serverInfoElement = $(Handlebars.templates['ServerInfoTemplate'](that.Server));
     if ($(serverInfoRootId).length) {
-      $(serverInfoRootId).remove();
+      $(serverInfoRootId).html($serverInfoElement.html());
+    } else {
+      initEventHandlers();
+      $(containerId).append($serverInfoElement);
     }
-
-    var template = Handlebars.templates['ServerInfoTemplate'](that.Server);
-    $serverInfoElement = $(template);
-    $(containerId).append($serverInfoElement);
-    initEventHandlers();
     displayServerProjects("#projects-and-builds-list-container");
   }
 
@@ -40,6 +39,12 @@
       }
 
       $("#tc-display-name-header-text").text(server.displayName);
+      that.Server.displayName = server.displayName;
+      that.Server.url = server.url;
+      that.Server.username = server.username;
+      that.Server.password = server.password;
+      //that.Show();
+      displayServerProjects("#projects-and-builds-list-container");
       that.ServerListPage.Show();
       //show success
     });
@@ -47,11 +52,12 @@
 
   function displayServerProjects(targetElement) {
     var $targetElement = $(targetElement);
+    $targetElement.html("");
     $("<div class='la-ball-scale-ripple-multiple'><div></div><div></div><div></div></div>").insertBefore($targetElement);
     that.TeamCityApi.GetProjectsForServer(that.Server, function (err, projects) {
       $targetElement.parent().find(".la-ball-scale-ripple-multiple").remove();
       if (err) {
-        displayError("failed to send get request to " + that.server.url);
+        displayError("failed to send get request to " + that.Server.url);
         return;
       }
       
@@ -92,6 +98,10 @@
         }
       }
     });
+  }
+
+  function displayError(message) {
+    console.log(message);
   }
 }
 
