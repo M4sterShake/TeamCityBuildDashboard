@@ -34,7 +34,7 @@
 
     that.DataStore.UpdateServer(server, function(err) {
       if (err) {
-        //show error
+        displayError("Unable to update server - " + err.message);
         return;
       }
 
@@ -43,10 +43,8 @@
       that.Server.url = server.url;
       that.Server.username = server.username;
       that.Server.password = server.password;
-      //that.Show();
       displayServerProjects("#projects-and-builds-list-container");
       that.ServerListPage.Show();
-      //show success
     });
   }
 
@@ -57,12 +55,13 @@
     that.TeamCityApi.GetProjectsForServer(that.Server, function (err, projects) {
       $targetElement.parent().find(".la-ball-scale-ripple-multiple").remove();
       if (err) {
-        displayError("failed to send get request to " + that.Server.url);
+        displayError("Failed to connect to " + that.Server.url + " with the given credentials - " + err.message);
         return;
       }
       
       $targetElement.html("");
       displayProjectTree(projects, null, $targetElement);
+      HelperMethods.ClearErrors($serverInfoElement);
     });
   }
 
@@ -75,7 +74,7 @@
             targetElement.append("<ul class='project-list'></ul>");
           }
           var targetList = targetElement.children("ul.project-list");
-          var projectListItem = $("<li class='closed'><i class='fa fa-cubes'></i>" + projects[i].name + "</li>");
+          var projectListItem = $("<li class='closed'><i class='fa fa-caret-right'></i></i>" + projects[i].name + "</li>");
           projectListItem.on("click", projectListItemEventHandler);
           targetList.append(projectListItem);
           displayProjectTree(projects, projects[i].id, targetList);
@@ -85,10 +84,10 @@
   }
 
   function projectListItemEventHandler(e) {
-    $(this).toggleClass("closed");
+    toggleItemOpen($(this));
     var $projectListItem = $(e.target).is("li") ? $(e.target) : $(e.target).parent("li");
     var projectName = $projectListItem.text();
-    that.TeamCityApi.GetBuildsForProject(that.Server, projectName, function (err, builds) {
+    that.TeamCityApi.GetBuildsForProject(that.Server, projectName, function(err, builds) {
       if (builds != null && builds.length > 0) {
         var $projectList = $projectListItem.parent("ul");
         $projectList.find('.build-list').remove();
@@ -100,8 +99,15 @@
     });
   }
 
+  function toggleItemOpen($item) {
+    $item.toggleClass("closed");
+    var projectExpandIcon = $item.find('i.fa.fa-caret-right, i.fa.fa-caret-down');
+    projectExpandIcon.toggleClass("fa-caret-right");
+    projectExpandIcon.toggleClass("fa-caret-down");
+  }
+
   function displayError(message) {
-    console.log(message);
+    HelperMethods.DisplayError($(serverInfoRootId).find(".messages"), message);
   }
 }
 

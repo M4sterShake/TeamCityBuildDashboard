@@ -44,7 +44,7 @@
 
     that.TeamCityApi.GetProjectsForServer(server, function (err, projects) {
       if (err) {
-        displayError("failed to send get request to " + server.url);
+        displayError("Couldn't connect to " + server.url + " with the specified credentials - " + err.message);
         return;
       }
 
@@ -100,11 +100,6 @@
     }
   }
 
-  function displayError(message) {
-    $("#add-server-form .error-message .message").text(message);
-    $("#add-server-form .error-message").show();
-  }
-
   function addServer(serverInfo) {
     that.DataStore.AddServer(serverInfo, function (err) {
       if (err) {
@@ -119,6 +114,10 @@
         displayServer(serverInfo.displayName);
       });
     });
+  }
+
+  function displayError(message) {
+    HelperMethods.DisplayError($(serverListRootId).find(".messages"), message);
   }
 }
 

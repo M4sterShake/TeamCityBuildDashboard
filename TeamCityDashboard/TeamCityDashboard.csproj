@@ -43,6 +43,7 @@
     <Content Include="app\pages\dashboard.html" />
     <Content Include="app\pages\settings.html" />
     <Content Include="app\scripts\background.js" />
+    <Content Include="app\scripts\HelperMethods.js" />
     <Content Include="app\scripts\lib\handlebars.js" />
     <Content Include="app\scripts\lib\jquery-ui.js" />
     <Content Include="app\scripts\lib\jquery.validate.js" />

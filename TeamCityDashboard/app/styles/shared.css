@@ -60,7 +60,7 @@ a:hover {
 }
 
 .fa-plus {
-    color:#4F4
+    color: #4F4;
 }
 
 .fa-server {
@@ -73,6 +73,11 @@ a:hover {
 
 .fa-cubes, .fa-cube {
     color: #5F9EA0;
+}
+
+.fa-caret-right, .fa-caret-down {
+    color: #4F4;
+    width: 1.5rem;
 }
 
 .fa-chevron-left {
@@ -162,12 +167,37 @@ input[type=submit]:active {
 
 /* Error messages */
 .error-message {
-    background-color: #ff4444;
-    display: none;
+    background-color: #C33;
+    display: block;
+    padding: 1rem;
+    position: relative;
+}
+
+.error-message {
+    padding-right: 2rem;
+    margin-top: 1rem;
 }
 
 .error-message .close-button {
     color: black;
-    font-weight: bold;
+    font-size: 2rem;
     margin-left: 2rem;
+    padding-top: 0.5rem;
+    padding-right: 0.5rem;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    text-align: right;
+}
+
+.error-message .message {
+    padding-right: 1rem;
+    display: block;
+}
+
+.error-message .close-button .fa {
+    padding-right: 0; 
+    line-height: 1.5rem; 
+    vertical-align: top;
 }
