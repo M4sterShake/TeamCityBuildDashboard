@@ -34,6 +34,11 @@
 
 #projects-header {
     margin-top: 0;
+    margin-bottom: 0;
+}
+
+#saved-servers-header {
+    margin-top: 0;
 }
 
 #update-server-form, #server-projects{
@@ -52,7 +57,41 @@
     padding-left: 0;
 }
 
+#projects-and-builds-list-container input[type=checkbox] {
+    display:none;
+}
+
+#projects-and-builds-list-container input[type=checkbox] + label{
+    display:inline-block;
+    width:1.6rem;
+    height:1.6rem;
+    vertical-align:middle;
+    cursor:pointer;
+    border:1px solid #E6E6E6;
+}
+
+#projects-and-builds-list-container input[type=checkbox] + label:after {
+    content: "\f00c";
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: 0;
+    transition: .25s;
+    opacity: 0;
+    vertical-align: top;
+    color: #4F4;
+    margin-top: 0.8rem;
+    margin-left: 0.8rem;
+    display: block;
+}
+
+#projects-and-builds-list-container input[type=checkbox]:checked + label:after {
+    font-size: 1.4rem;
+    opacity: 1;
+    margin-top: 0;
+    margin-left: 0;
+}
+
 .project-list li {
+
     cursor: pointer;
 }
 

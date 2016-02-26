@@ -28,6 +28,7 @@
     that.GetServers(function (storedServers) {
       if (storedServers != null) {
         if (!serverAlreadyExists(storedServers, server)) {
+          server.id = generateGUID();
           storedServers.push(server);
           chrome.storage.sync.set({ 'teamCityServers': storedServers}, function() {
             handleErrors(callback);
@@ -36,6 +37,7 @@
           callback({ message: "You've already added a server with that URL" });
         }
       } else {
+        server.id = generateGUID();
         var servers = [server];
         chrome.storage.sync.set({ 'teamCityServers': servers }, function () {
           handleErrors(callback);
@@ -49,7 +51,7 @@
     that.GetServers(function (servers) {
       if (servers != null) {
         for (var i = 0; i < servers.length && serverFound === false; i++) {
-          if (servers[i].displayName === server.originalDisplayName) {
+          if (servers[i].id === server.id) {
             serverFound = true;
             servers[i].displayName = server.displayName;
             servers[i].url = server.url;
@@ -61,7 +63,28 @@
           }
         }
         if (serverFound === false) {
-          callback({ message: "Unable to find a server with the name '" + serverName + "'" });
+          callback({ message: "Unable to find a server with the name '" + server.originalDisplayName + "'" });
+        }
+      }
+    });
+  }
+
+  this.SaveSubscriptionsForServer = function(server, subscribedBuildsAndProjects, callback) {
+    var serverFound = false;
+    that.GetServers(function(servers) {
+      if (servers != null) {
+        for (var i = 0; i < servers.length && serverFound === false; i++) {
+          if (servers[i].id === server.id) {
+            servers[i].subscriptions = subscribedBuildsAndProjects;
+            serverFound = true;
+            chrome.storage.sync.set({'teamCityServers': servers}, function()
+            {
+              handleErrors(callback)
+            });
+          }
+        }
+        if (serverFound === false) {
+          callback({ message: "Unable to find a server with the name '" + server.originalDisplayName + "'" });
         }
       }
     });
@@ -92,6 +115,16 @@
       }
     }
   }
+
+  function generateGUID() {
+    var d = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = (d + Math.random()*16)%16 | 0;
+      d = Math.floor(d/16);
+      return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+    });
+    return uuid;
+  };
 }
 
 DataStore.init = function () {
