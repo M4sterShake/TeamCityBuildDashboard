@@ -155,11 +155,12 @@
       that.TeamCityApi.GetBuildsForProject(that.Server, projectName, function(err, builds) {
         if (builds != null && builds.length > 0) {
           var $projectList = $projectListItem.parent("ul");
-          $projectList.find('.build-list').remove();
-          $("<ul class='build-list' data-project='" + $projectListItem.attr("data-project") + "'><ul>").insertAfter($projectListItem);
+          $projectList.find(".build-list[data-project='" + $projectListItem.data("project") + "']").remove();
+          var $buildList = $("<ul class='build-list' data-project='" + $projectListItem.attr("data-project") + "'><ul>");
           for (var i = 0; i < builds.length; i++) {
-            $projectList.find(".build-list").append("<li class='build-list-item'>" + getCheckBoxForListItem(builds[i].id, projectId, "build") + "<i class='fa fa-cubes'></i>" + builds[i].name + "</li>");
+            $buildList.append("<li class='build-list-item'>" + getCheckBoxForListItem(builds[i].id, projectId, "build") + "<i class='fa fa-cubes'></i>" + builds[i].name + "</li>");
           }
+          $buildList.insertAfter($projectListItem);
         }
       });
     }
