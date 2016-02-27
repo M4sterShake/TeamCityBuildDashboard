@@ -5,8 +5,11 @@
     padding: 1.5rem;
 }
 
+#new-server-header {
+    margin-left: -15px;
+}
+
 #add-server-form {
-    display: none;
     margin-bottom: 1rem;
 }
 
@@ -18,6 +21,12 @@
     display: none;
     list-style: none;
     padding-left: 0;
+    width: 100%;
+    font-size:2.3rem;
+}
+
+#tc-server-list .fa-server {
+    font-size: 2.6rem;
 }
 
 .settings-page {
@@ -49,8 +58,16 @@
     list-style: none;
 }
 
+#projects-and-builds-list-container ul .loading-spinner {
+    margin-left: 3rem;
+}
+
 #projects-and-builds-list-container li.closed ~ ul{
     display: none;
+}
+
+#projects-and-builds-list-container li.open ~ ul{
+    display: block;
 }
 
 #projects-and-builds-list-container > ul{

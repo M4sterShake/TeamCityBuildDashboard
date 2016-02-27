@@ -27,7 +27,6 @@
 
   function initEventHandlers(serverListElement) {
     serverListElement.find("#add-server-form").validate({ submitHandler: addServerSubmitHandler });
-    serverListElement.find("#add-new-server-link").on("click", toggleNewServerForm);
   }
 
   function initGlobalEventHandlers() {
@@ -50,20 +49,6 @@
 
       addServer(server);
     });
-  }
-
-  function toggleNewServerForm() {
-    if ($("#add-server-form").is(":visible")) {
-      $("#add-server-form").slideUp({
-        duration: 1250,
-        easing: "easeOutQuart"
-      });
-    } else {
-      $("#add-server-form").slideDown({
-        duration: 1250,
-        easing: "easeOutQuart"
-      });
-    }
   }
 
   function clearNewServerForm() {
@@ -107,7 +92,6 @@
         return;
       }
 
-      toggleNewServerForm();
       clearNewServerForm();
       that.DataStore.GetServers(function (servers) {
         displayServers(servers);

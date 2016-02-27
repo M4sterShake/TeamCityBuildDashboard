@@ -114,8 +114,9 @@
   function displayServerProjects(targetElement) {
     var $targetElement = $(targetElement);
     $targetElement.html("");
-    $("<div class='la-ball-scale-ripple-multiple'><div></div><div></div><div></div></div>").insertBefore($targetElement);
+    HelperMethods.DisplayLoadingSpinner($targetElement);
     that.TeamCityApi.GetProjectsForServer(that.Server, function (err, projects) {
+      HelperMethods.RemoveLoadingSpinner($targetElement);
       $targetElement.parent().find(".la-ball-scale-ripple-multiple").remove();
       if (err) {
         displayError("Failed to connect to " + that.Server.url + " with the given credentials - " + err.message);
@@ -150,6 +151,7 @@
     if (!$(e.target).hasClass("checkbox-label") && !$(e.target).hasClass("tc-item-checkbox")) {
       toggleItemOpen($(this));
       var $projectListItem = $(e.target).is("li") ? $(e.target) : $(e.target).parent("li");
+      var $loadingSpinner = HelperMethods.GetLoadingSpinner().insertAfter($projectListItem);
       var projectName = $projectListItem.text();
       var projectId = $projectListItem.data("project");
       that.TeamCityApi.GetBuildsForProject(that.Server, projectName, function(err, builds) {
@@ -160,6 +162,8 @@
           for (var i = 0; i < builds.length; i++) {
             $buildList.append("<li class='build-list-item'>" + getCheckBoxForListItem(builds[i].id, projectId, "build") + "<i class='fa fa-cubes'></i>" + builds[i].name + "</li>");
           }
+          checkBuildsIfProjectChecked($buildList, $projectListItem.find(".tc-item-checkbox").is(":checked"));
+          HelperMethods.RemoveLoadingSpinner($loadingSpinner);
           $buildList.insertAfter($projectListItem);
         }
       });
@@ -168,6 +172,7 @@
 
   function toggleItemOpen($item) {
     $item.toggleClass("closed");
+    $item.toggleClass("open");
     var projectExpandIcon = $item.find('i.fa.fa-caret-right, i.fa.fa-caret-down');
     projectExpandIcon.toggleClass("fa-caret-right");
     projectExpandIcon.toggleClass("fa-caret-down");
@@ -198,6 +203,14 @@
       (itemType === "build" ? "data-build='" + itemId + "'" : "") +
       (isChecked === true ? "checked='checked'" : "") +
       " class='" + itemType + " tc-item-checkbox'id='check-" + itemId + "' name='check-" + itemId + "'></input><label for='check-" + itemId + "' class='checkbox-label'></label>";
+  }
+
+  function checkBuildsIfProjectChecked($buildList, projectIsChecked) {
+    if (projectIsChecked) {
+      if ($buildList.find(".tc-item-checkbox:checked").length === 0) {
+        $buildList.find(".tc-item-checkbox").prop("checked", true);
+      }
+    }
   }
 
   function displayError(message) {

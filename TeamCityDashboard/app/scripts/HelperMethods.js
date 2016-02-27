@@ -16,4 +16,16 @@
       $(target).find(".error-message").remove();
     });
   }
+
+  this.DisplayLoadingSpinner = function ($target) {
+    $target.append(this.GetLoadingSpinner());
+  }
+
+  this.GetLoadingSpinner = function() {
+    return $("<div class='la-ball-scale-ripple-multiple loading-spinner'><div></div><div></div><div></div></div>");
+  }
+
+  this.RemoveLoadingSpinner = function($target) {
+    $target.remove(".la-ball-scale-ripple-multiple");
+  }
 }
