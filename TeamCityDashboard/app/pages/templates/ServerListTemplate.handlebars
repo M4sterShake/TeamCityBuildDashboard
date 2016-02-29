@@ -4,18 +4,18 @@
     <p id="new-server-header"><i class="fa fa-plus"></i>New Server</p>
     <form action="#" id="add-server-form" name="add-server-form">
       <div class="form-row">
-        <input type="text" name="tc-display-name" class="tc-display-name" placeholder="Display Name" />
+        <input type="text" name="tc-display-name" class="tc-display-name" placeholder="Display Name" required/>
       </div>
       <div class="form-row">
-        <input type="url" name="tc-url" class="tc-url" placeholder="TeamCity URL" />
+        <input type="url" name="tc-url" class="tc-url" placeholder="TeamCity URL" required/>
       </div>
       <div class="form-row">
-        <input type="text" name="tc-user" class="tc-user" placeholder="Username" />
+        <input type="text" name="tc-user" class="tc-user" placeholder="Username" required/>
       </div>
       <div class="form-row">
-        <input type="password" name="tc-pass" class="tc-pass" placeholder="Password" />
+        <input type="password" name="tc-pass" class="tc-pass" placeholder="Password" required/>
       </div>
-      <input type="submit" name="add-server-submit" id="add-server-button" value="Add Server" />
+      <input type="submit" name="add-server-submit" id="add-server-button" value="Add Server" required/>
       <span class="messages"></span>
     </form>
   </div>

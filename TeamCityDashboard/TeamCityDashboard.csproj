@@ -43,6 +43,7 @@
     <Content Include="app\pages\dashboard.html" />
     <Content Include="app\pages\settings.html" />
     <Content Include="app\scripts\background.js" />
+    <Content Include="app\scripts\Dashboard.js" />
     <Content Include="app\scripts\HelperMethods.js" />
     <Content Include="app\scripts\lib\handlebars.js" />
     <Content Include="app\scripts\lib\jquery-ui.js" />
@@ -68,6 +69,9 @@
     <Content Include="screenshots\readme.txt" />
     <Content Include="app\pages\templates\ServerInfoTemplate.handlebars" />
     <Content Include="app\pages\templates\ServerListTemplate.handlebars" />
+    <Content Include="app\pages\templates\BuildGridServer.handlebars" />
+    <Content Include="app\pages\templates\BuildGridProject.handlebars" />
+    <Content Include="app\pages\templates\BuildGridBuild.handlebars" />
     <None Include="scripts\_references.js" />
     <None Include="scripts\chrome-api-vsdoc.js" />
   </ItemGroup>

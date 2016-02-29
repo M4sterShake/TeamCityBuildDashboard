@@ -43,11 +43,12 @@ h4 {
 a, a:visited {
     color: #E6E6E6;
     text-decoration: none;
+    transition: color 0.5s;
 }
 
 a:link {
-    color: #E6E6E6 !important;
-    text-decoration: none !important;
+    color: #E6E6E6;
+    text-decoration: none;
 }
 
 a:hover {
@@ -90,7 +91,7 @@ a:hover {
     max-width: 7rem;
     opacity: 0;
     margin-left: 0;
-    transition: margin-left 0.5s;
+    transition: margin-left 0.5s, color 0.5s;
 }
 
 .back-button.unclickable {
@@ -169,7 +170,7 @@ input[type=submit]:active {
     color:#A6A6A6;
 }
 
-/* Error messages */
+/* Messages */
 .error-message {
     background-color: #C33;
     display: block;
@@ -204,4 +205,14 @@ input[type=submit]:active {
     padding-right: 0; 
     line-height: 1.5rem; 
     vertical-align: top;
+}
+
+#message-toast {
+    background-color: #8ED260;
+    color: #222;
+    padding: 0.5rem 2rem;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
 }

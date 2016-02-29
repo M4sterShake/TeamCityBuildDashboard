@@ -26,6 +26,7 @@
 
   function updateServerSubmitHandler(form) {
     var server = {
+      id: that.Server.id,
       originalDisplayName: $(form).find(".tc-original-display-name").val(),
       displayName: $(form).find(".tc-display-name").val(),
       url: $(form).find(".tc-url").val(),
@@ -46,29 +47,42 @@
       that.Server.password = server.password;
       displayServerProjects("#projects-and-builds-list-container");
       that.ServerListPage.Show();
+      HelperMethods.DisplayMessage("Updated!");
     });
   }
 
   function projectOrBuildCheckedHandler(e) {
+    e.stopPropagation();
     if ($(this).hasClass("build")) {
       selectBuildProject($(this));
       updateSubscribedProjectsAndBuilds();
+      HelperMethods.DisplayMessage("Updated!");
     }
     else if ($(this).hasClass("project")) {
-      selectProjectBuilds($(this));
-      updateSubscribedProjectsAndBuilds();
+      var $projectCheckbox = $(this);
+      var $projectListItem = $projectCheckbox.parents("li").first();
+      getProjectBuildList($projectListItem, function(err, $buildList) {
+        if (err) {
+          displayError(err.message);
+        }
+
+        $projectListItem.children(".project-name").after($buildList);
+        selectProjectBuilds($projectCheckbox);
+        updateSubscribedProjectsAndBuilds();
+        HelperMethods.DisplayMessage("Updated!");
+      });
     }
   }
 
   function selectProjectBuilds($projectCheckbox) {
     var isChecked = $projectCheckbox.is(":checked"),
       projectId = $projectCheckbox.data("project");
-    $projectCheckbox.parents("ul").first().find("ul.build-list[data-project='" + projectId + "']>li input[type=checkbox]").prop("checked", isChecked);
+    $projectCheckbox.parents("li").first().find("ul.build-list[data-project='" + projectId + "']>li input[type=checkbox]").prop("checked", isChecked);
   }
 
   function selectBuildProject($buildCheckbox) {
     var isChecked = $buildCheckbox.is(":checked"),
-      $parentProjectCheckbox = $buildCheckbox.parents("ul.project-list").first().find("li.project-list-item input[data-project='" + $buildCheckbox.data("project") + "']"),
+      $parentProjectCheckbox = $buildCheckbox.parents("li.project-list-item").first().find("input[data-project='" + $buildCheckbox.data("project") + "']").first(),
       $siblingBuilds = $buildCheckbox.parents("li.build-list-item").siblings(".build-list-item");
     var siblingsAreChecked = $siblingBuilds.find(".build.tc-item-checkbox:checked").length > 0;
     var parentShouldBeChecked = isChecked || siblingsAreChecked;
@@ -81,8 +95,7 @@
     $projectListItems.each(function (index, listItem) {
       var $listItem = $(listItem);
       if ($listItem.find(".project.tc-item-checkbox").is(":checked")) {
-        var projectId = $listItem.data("project");
-        var $projectBuildListItems = $("#projects-and-builds-list-container").find("ul[data-project='" + projectId + "'] .build-list-item");
+        var $projectBuildListItems = $listItem.find(".build-list-item");
         var $selectedProjectBuildCheckboxes = $projectBuildListItems.find("input.build[type=checkbox]:checked");
         if ($selectedProjectBuildCheckboxes.length > 0) {
           var subscribedBuildsForThisProject = [];
@@ -103,7 +116,8 @@
       }
     });
 
-    that.DataStore.SaveSubscriptionsForServer(that.Server, subscribedProjectsAndBuilds, function(err) {
+    that.Server.subscriptions = subscribedProjectsAndBuilds;
+    that.DataStore.UpdateServer(that.Server, function(err) {
       if (err) {
         displayError(err.message);
       }
@@ -138,42 +152,56 @@
             targetElement.append("<ul class='project-list'></ul>");
           }
           var targetList = targetElement.children("ul.project-list");
-          var projectListItem = $("<li class='closed project-list-item' data-project='" + projects[i].id + "'><i class='fa fa-caret-right'></i>" + getCheckBoxForListItem(projects[i].id, projects[i].id, "project") + projects[i].name + "</li>");
+          var projectListItem = $("<li class='closed project-list-item' data-project='" + projects[i].id + "'><i class='fa fa-caret-right'></i>" + getCheckBoxForListItem(projects[i].id, projects[i].id, "project") + "<span class='project-name'>" + projects[i].name + "</span></li>");
           projectListItem.on("click", projectListItemEventHandler);
           targetList.append(projectListItem);
-          displayProjectTree(projects, projects[i].id, targetList);
+          displayProjectTree(projects, projects[i].id, projectListItem);
         }
       }
     }
   }
 
   function projectListItemEventHandler(e) {
-    if (!$(e.target).hasClass("checkbox-label") && !$(e.target).hasClass("tc-item-checkbox")) {
+    if (!$(e.target).hasClass("checkbox-label") && !$(e.target).hasClass("tc-item-checkbox") && !$(e.target).is("ul")) {
+      e.stopPropagation();
       toggleItemOpen($(this));
       var $projectListItem = $(e.target).is("li") ? $(e.target) : $(e.target).parent("li");
-      var $loadingSpinner = HelperMethods.GetLoadingSpinner().insertAfter($projectListItem);
-      var projectName = $projectListItem.text();
-      var projectId = $projectListItem.data("project");
-      that.TeamCityApi.GetBuildsForProject(that.Server, projectName, function(err, builds) {
-        if (builds != null && builds.length > 0) {
-          var $projectList = $projectListItem.parent("ul");
-          $projectList.find(".build-list[data-project='" + $projectListItem.data("project") + "']").remove();
-          var $buildList = $("<ul class='build-list' data-project='" + $projectListItem.attr("data-project") + "'><ul>");
-          for (var i = 0; i < builds.length; i++) {
-            $buildList.append("<li class='build-list-item'>" + getCheckBoxForListItem(builds[i].id, projectId, "build") + "<i class='fa fa-cubes'></i>" + builds[i].name + "</li>");
-          }
-          checkBuildsIfProjectChecked($buildList, $projectListItem.find(".tc-item-checkbox").is(":checked"));
-          HelperMethods.RemoveLoadingSpinner($loadingSpinner);
-          $buildList.insertAfter($projectListItem);
+      $projectListItem.children(".project-name").after(HelperMethods.GetLoadingSpinner());
+      getProjectBuildList($projectListItem, function (err, $buildList) {
+        if (err) {
+          displayError(err.message);
+          return;
         }
+
+        HelperMethods.RemoveLoadingSpinner($projectListItem);
+        $projectListItem.children(".project-name").after($buildList);
       });
     }
   }
 
+  function getProjectBuildList($projectListItem, callback) {
+    var projectName = $projectListItem.children(".project-name").text();
+    var projectId = $projectListItem.data("project");
+    that.TeamCityApi.GetBuildsForProject(that.Server, projectName, function (err, builds) {
+      if (err) {
+        callback(err);
+      }
+
+      if (builds != null && builds.length > 0) {
+        var $projectList = $projectListItem.parent("ul");
+        $projectList.find(".build-list[data-project='" + $projectListItem.data("project") + "']").remove();
+        var $buildList = $("<ul class='build-list' data-project='" + $projectListItem.attr("data-project") + "'><ul>");
+        for (var i = 0; i < builds.length; i++) {
+          $buildList.append("<li class='build-list-item'>" + getCheckBoxForListItem(builds[i].id, projectId, "build") + "<i class='fa fa-cubes'></i>" + builds[i].name + "</li>");
+        }
+        callback(null, $buildList);
+      }
+    });
+  }
+
   function toggleItemOpen($item) {
     $item.toggleClass("closed");
-    $item.toggleClass("open");
-    var projectExpandIcon = $item.find('i.fa.fa-caret-right, i.fa.fa-caret-down');
+    var projectExpandIcon = $item.children('i.fa.fa-caret-right, i.fa.fa-caret-down');
     projectExpandIcon.toggleClass("fa-caret-right");
     projectExpandIcon.toggleClass("fa-caret-down");
   }
@@ -203,14 +231,6 @@
       (itemType === "build" ? "data-build='" + itemId + "'" : "") +
       (isChecked === true ? "checked='checked'" : "") +
       " class='" + itemType + " tc-item-checkbox'id='check-" + itemId + "' name='check-" + itemId + "'></input><label for='check-" + itemId + "' class='checkbox-label'></label>";
-  }
-
-  function checkBuildsIfProjectChecked($buildList, projectIsChecked) {
-    if (projectIsChecked) {
-      if ($buildList.find(".tc-item-checkbox:checked").length === 0) {
-        $buildList.find(".tc-item-checkbox").prop("checked", true);
-      }
-    }
   }
 
   function displayError(message) {

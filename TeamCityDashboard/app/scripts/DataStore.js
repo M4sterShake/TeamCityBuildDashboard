@@ -57,6 +57,7 @@
             servers[i].url = server.url;
             servers[i].username = server.username;
             servers[i].password = server.password;
+            servers[i].subscriptions = server.subscriptions;
             chrome.storage.sync.set({ 'teamCityServers': servers }, function () {
               handleErrors(callback);
             });
@@ -69,26 +70,25 @@
     });
   }
 
-  this.SaveSubscriptionsForServer = function(server, subscribedBuildsAndProjects, callback) {
-    var serverFound = false;
-    that.GetServers(function(servers) {
-      if (servers != null) {
-        for (var i = 0; i < servers.length && serverFound === false; i++) {
-          if (servers[i].id === server.id) {
-            servers[i].subscriptions = subscribedBuildsAndProjects;
-            serverFound = true;
-            chrome.storage.sync.set({'teamCityServers': servers}, function()
-            {
-              handleErrors(callback)
-            });
-          }
-        }
-        if (serverFound === false) {
-          callback({ message: "Unable to find a server with the name '" + server.originalDisplayName + "'" });
-        }
-      }
-    });
-  }
+  //this.SaveSubscriptionsForServer = function(server, callback) {
+  //  var serverFound = false;
+  //  that.GetServers(function(servers) {
+  //    if (servers != null) {
+  //      for (var i = 0; i < servers.length && serverFound === false; i++) {
+  //        if (servers[i].id === server.id) {
+  //          servers[i].subscriptions = server.subscriptions;
+  //          serverFound = true;
+  //          chrome.storage.sync.set({'teamCityServers': servers}, function() {
+  //            handleErrors(callback);
+  //          });
+  //        }
+  //      }
+  //      if (serverFound === false) {
+  //        callback({ message: "Unable to find a server with the name '" + server.originalDisplayName + "'" });
+  //      }
+  //    }
+  //  });
+  //}
 
   function serverAlreadyExists(serverList, server) {
       var serverExists = false;

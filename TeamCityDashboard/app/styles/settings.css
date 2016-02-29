@@ -50,6 +50,13 @@
     margin-top: 0;
 }
 
+.tc-server-list-item .fa {
+    transition: 0.75s;
+}
+.tc-server-list-item:hover .fa {
+    color: #C54F00
+}
+
 #update-server-form, #server-projects{
     padding-left: 0;
 }
@@ -59,15 +66,23 @@
 }
 
 #projects-and-builds-list-container ul .loading-spinner {
-    margin-left: 3rem;
+    display: inline;
+    height: 1.7rem;
+    width: 1.7rem;
+    position: absolute;
+    margin-left: 1rem;
 }
 
-#projects-and-builds-list-container li.closed ~ ul{
+#projects-and-builds-list-container li.closed ul{
     display: none;
 }
 
-#projects-and-builds-list-container li.open ~ ul{
-    display: block;
+#projects-and-builds-list-container ul{
+    padding-left: 3rem;
+}
+
+#projects-and-builds-list-container > ul > li{
+    padding-left: 0.5rem;
 }
 
 #projects-and-builds-list-container > ul{
@@ -108,7 +123,7 @@
 }
 
 .project-list li {
-
+    padding-left: 1rem;
     cursor: pointer;
 }
 
