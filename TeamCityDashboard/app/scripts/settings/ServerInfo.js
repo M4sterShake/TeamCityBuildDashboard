@@ -102,8 +102,9 @@
           $selectedProjectBuildCheckboxes.each(function (buildIndex, buildItem) {
             var $buildItem = $(buildItem);
             subscribedBuildsForThisProject.push({
-              id: $buildItem.data("build")
-            });
+              id: $buildItem.data("build"),
+              name: $buildItem.parent().text()
+          });
           });
 
           subscribedProjectsAndBuilds.push({

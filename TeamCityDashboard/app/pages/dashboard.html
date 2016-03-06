@@ -5,11 +5,23 @@
   <meta charset="utf-8"/>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="../styles/shared.css" />
+  <link rel="stylesheet" type="text/css" href="../styles/bootstrap.css" />
+  <link rel="stylesheet" href="../styles/shared.css"/>
+  <link rel="stylesheet" href="../styles/dashboard.css" />
 </head>
 <body>
-  <h1><i class="fa fa-th"></i> TeamCity Dashboard
-  </h1>
   <div id="dashboard-grid-container"></div>
+
+  <script type="text/javascript" src="../scripts/lib/jquery.js"></script>
+  <script type="text/javascript" src="../scripts/lib/handlebars.js"></script>
+  <script type="text/javascript" src="../pages/templates/handlebarsTemplates.js"></script>
+  <script type="text/javascript" src="../scripts/shared/HelperMethods.js"></script>
+  <script type="text/javascript" src="../scripts/shared/DataStore.js"></script>
+  <script type="text/javascript" src="../scripts/shared/teamCityApi.js"></script>
+  <script type="text/javascript" src="../scripts/dashboard/DashboardItem.js"></script>
+  <script type="text/javascript" src="../scripts/dashboard/BuildDashboardItem.js"></script>
+  <script type="text/javascript" src="../scripts/dashboard/ProjectDashboardItem.js"></script>
+  <script type="text/javascript" src="../scripts/dashboard/ServerDashboardItem.js"></script>
+  <script type="text/javascript" src="../scripts/dashboard/Dashboard.js"></script>
 </body>
 </html>
