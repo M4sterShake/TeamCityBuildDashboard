@@ -9,8 +9,7 @@
       var orderedServerList = servers.sort(positionComparer); //Create an ordered list of servers based on their position on the dashboard.
       for (var i = 0; i < orderedServerList.length; i++) {
         orderedServerList[i].position = i;
-        var dashboardServer = Object.create(ServerDashboardItem);
-        dashboardServer.Init(orderedServerList[i], targetElement);
+        var dashboardServer = Object.create(ServerDashboardItem).Init(orderedServerList[i], targetElement);
         dashboardServer.Show();
         dashboardServers.push(dashboardServer);
       }

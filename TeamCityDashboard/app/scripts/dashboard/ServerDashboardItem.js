@@ -6,8 +6,7 @@
     that.$targetElement.append(serverGridItem);
 
     for (var i = 0; i < that.dashboardItem.subscriptions.length; i++) {
-      var projectDashboardItem = Object.create(ProjectDashboardItem);
-      projectDashboardItem.Init(that.dashboardItem.subscriptions[i], that.$targetElement.find(".server-contents"));
+      var projectDashboardItem = Object.create(ProjectDashboardItem).Init(that.dashboardItem.subscriptions[i], that.$targetElement.find(".server-contents"));
       projectDashboardItem.Show();
     }
   }
