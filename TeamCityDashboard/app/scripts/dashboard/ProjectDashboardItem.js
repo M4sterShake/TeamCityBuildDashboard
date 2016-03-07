@@ -1,11 +1,13 @@
 ﻿var ProjectDashboardItem = $.extend({
   Show: function() {
     var that = this;
-    var projectGridItem = $(Handlebars.templates['BuildGridProjectTemplate'](that.dashboardItem));
-    that.$targetElement.append(projectGridItem);
+    that.SetItemWidth(that.itemSettings);
+    var $projectGridItem = $(Handlebars.templates['BuildGridProjectTemplate'](that.itemSettings));
+    that.InitDashboardItemEventListeners($projectGridItem);
+    that.$targetElement.append($projectGridItem);
 
-    for (var i = 0; i < that.dashboardItem.builds.length; i++) {
-      var buildDashboardItem = Object.create(BuildDashboardItem).Init(that.dashboardItem.builds[i], $(projectGridItem).find(".project-contents"));
+    for (var i = 0; i < that.itemSettings.builds.length; i++) {
+      var buildDashboardItem = Object.create(BuildDashboardItem).Init(that.itemSettings.builds[i], $($projectGridItem).find(".project-contents"));
       buildDashboardItem.Show();
     }
   }

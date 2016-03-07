@@ -42,6 +42,7 @@
     <Content Include="app\img\icon.png" />
     <Content Include="app\pages\dashboard.html" />
     <Content Include="app\pages\settings.html" />
+    <None Include="app\pages\templates\DashboardResizerPartial.handlebars" />
     <Content Include="app\scripts\background.js" />
     <Content Include="app\scripts\dashboard\BuildDashboardItem.js" />
     <Content Include="app\scripts\dashboard\Dashboard.js" />
