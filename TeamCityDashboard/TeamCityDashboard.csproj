@@ -49,6 +49,7 @@
     <Content Include="app\scripts\dashboard\DashboardItem.js" />
     <Content Include="app\scripts\dashboard\ProjectDashboardItem.js" />
     <Content Include="app\scripts\dashboard\ServerDashboardItem.js" />
+    <Content Include="app\scripts\lib\packery.js" />
     <Content Include="app\scripts\shared\HelperMethods.js" />
     <Content Include="app\scripts\lib\handlebars.js" />
     <Content Include="app\scripts\lib\jquery-ui.js" />

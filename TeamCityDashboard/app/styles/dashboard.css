@@ -7,17 +7,27 @@
 
 .grid-item {
     padding: 0;
+    background-color: #272822;
+    font-size: inherit;
+    border: 1px solid #dcdcdc;
+}
+
+.grid-item.SUCCESS {
+    background-color: green;
+}
+
+.grid-item.NOT_RUN {
+    background-color: grey;
+}
+
+.grid-item .title {
+    padding: 1rem;
 }
 
 .grid-item h1, .grid-item h2, .grid-item h3, .grid-item h4, .grid-item h5 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.build-grid-item {
-    border: 1px solid #dcdcdc;
-    padding: 2rem;
 }
 
 .build-grid-item .build-title {
@@ -33,7 +43,6 @@
 
 .resizer-buttons .resizer-button {
     border: 1px solid #E6E6E6;
-    border-width: 0 0 1px 1px;
     display: inline;
     float: left;
     width: 4rem;
@@ -42,13 +51,11 @@
     line-height: 4rem;
     cursor: pointer;
     transition: background-color .75s, color .75s;
+    margin-right: -1px;
+    margin-top: -1px;
 }
 
 .resizer-buttons .resizer-button:hover {
     background-color: #E6E6E6;
     color: #272822;
 }
-
-/*.grid-item:hover>.resizer-buttons {
-    opacity: 1;
-}*/

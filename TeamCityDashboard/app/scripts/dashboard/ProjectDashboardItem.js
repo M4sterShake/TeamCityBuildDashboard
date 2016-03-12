@@ -1,14 +1,19 @@
 ﻿var ProjectDashboardItem = $.extend({
-  Show: function() {
+  Show: function(server) {
     var that = this;
     that.SetItemWidth(that.itemSettings);
     var $projectGridItem = $(Handlebars.templates['BuildGridProjectTemplate'](that.itemSettings));
     that.InitDashboardItemEventListeners($projectGridItem);
     that.$targetElement.append($projectGridItem);
+    var $projectContents = $projectGridItem.find(".project-contents").first();
 
     for (var i = 0; i < that.itemSettings.builds.length; i++) {
-      var buildDashboardItem = Object.create(BuildDashboardItem).Init(that.itemSettings.builds[i], $($projectGridItem).find(".project-contents"));
-      buildDashboardItem.Show();
+      var buildDashboardItem = Object.create(BuildDashboardItem).Init(that.itemSettings.builds[i], $projectContents, that.teamCityApi);
+      buildDashboardItem.Show(server);
     }
+
+    $projectContents.packery({
+      itemSelector: '.build-grid-item'
+    });
   }
 }, DashboardItem);

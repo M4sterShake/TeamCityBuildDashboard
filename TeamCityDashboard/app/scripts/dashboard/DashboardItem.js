@@ -1,7 +1,8 @@
 ﻿var DashboardItem = {
-  Init: function (dashboardItemParam, targetElement) {
+  Init: function (dashboardItemParam, targetElement, teamCityApi) {
     this.itemSettings = dashboardItemParam;
     this.$targetElement = $(targetElement);
+    this.teamCityApi = teamCityApi;
     return this;
   },
   InitDashboardItemEventListeners: function ($dashboardItemElement) {
@@ -34,23 +35,9 @@
 
     return server;
   },
-  ResizeDashboardItem: function($clickedResizer) {
-    var $thisGridItem = $clickedResizer.parents(".grid-item").first(),
-      thisGridItemXBefore = $thisGridItem.position().left,
-      thisGridItemYBefore = $thisGridItem.position().top,
-      thisGridItemWidthBefore = $thisGridItem.outerWidth(),
-      thisGridItemXAfter = null,
-      thisGridItemYAfter = null,
-      thisGridItemWidthAfter = null,
-      positionsBefore = [],
-      positionsAfter = [],
-      thisOrChildrenSelector = function (index, element) {
-        return $(element).is($thisGridItem) || $(element).is($thisGridItem.find(".grid-item")) ? true : false;
-      };
-
-    $('.grid-item').not(thisOrChildrenSelector).each(function (index, elem) {
-      positionsBefore[index] = [$(elem).position().top, $(elem).position().left];
-    });
+  ResizeDashboardItem: function ($clickedResizer) {
+    var that = this,
+      $thisGridItem = $clickedResizer.parents(".grid-item").first();
 
     $thisGridItem.removeClass("small")
       .removeClass("medium")
@@ -66,28 +53,12 @@
       $thisGridItem.addClass("large").addClass("col-xs-12");
     }
 
-    thisGridItemXAfter = $thisGridItem.position().left;
-    thisGridItemYAfter = $thisGridItem.position().top;
-    thisGridItemWidthAfter = $thisGridItem.outerWidth();
-    $('.grid-item').not(thisOrChildrenSelector).each(function (index, elem) {
-      positionsAfter[index] = [$(elem).position().top, $(elem).position().left];
-    });
-
-    $thisGridItem.css({ position: 'absolute', top: thisGridItemYBefore, left: thisGridItemXBefore, width: thisGridItemWidthBefore })
-      .animate({ top: thisGridItemYAfter, left: thisGridItemXAfter, width: thisGridItemWidthAfter },
-        750,
-        "easeOutExpo",
-        function () {
-          $(this).css({ position: '', top: '', left: '', width: "" });
-        });
-    $('.grid-item').not(thisOrChildrenSelector).each(function (tindex, telem) {
-      $(telem).css({ position: 'absolute', top: positionsBefore[tindex][0], left: positionsBefore[tindex][1] })
-        .animate({ top: positionsAfter[tindex][0], left: positionsAfter[tindex][1] },
-          750,
-          "easeOutExpo",
-          function() {
-            $(this).css({ position: '', top: '', left: '' });
-          });
-    });
+    that.ReversePackery($("#dashboard-grid-container").find(".grid-item-contents"));
+    $("#dashboard-grid-container").packery();
+  },
+  ReversePackery: function (listOfContainers) {
+    for (var i = listOfContainers.length -1; i > -1; i--) {
+      $(listOfContainers[i]).packery("layout");
+    }
   }
 }
