@@ -40,6 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="app\img\icon.png" />
+    <Content Include="app\img\SuccessGreen.png" />
     <Content Include="app\pages\dashboard.html" />
     <Content Include="app\pages\settings.html" />
     <None Include="app\pages\templates\DashboardResizerPartial.handlebars" />
@@ -49,6 +50,7 @@
     <Content Include="app\scripts\dashboard\DashboardItem.js" />
     <Content Include="app\scripts\dashboard\ProjectDashboardItem.js" />
     <Content Include="app\scripts\dashboard\ServerDashboardItem.js" />
+    <Content Include="app\scripts\lib\moment.js" />
     <Content Include="app\scripts\lib\packery.js" />
     <Content Include="app\scripts\shared\HelperMethods.js" />
     <Content Include="app\scripts\lib\handlebars.js" />

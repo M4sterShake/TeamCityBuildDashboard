@@ -3,25 +3,59 @@
     margin: 0;
 }
 
-.server-grid-item {padding: 0.5rem;}
+.server-grid-item > .title, .project-grid-item > .title {
+    padding: 0 1rem;
+    margin: 0;
+}
 
 .grid-item {
     padding: 0;
     background-color: #272822;
     font-size: inherit;
-    border: 1px solid #dcdcdc;
+    transition: background-color 0.5s;
+}
+
+.grid-item .loading-spinner {
+    display: inline-flex;
+    position: absolute;
+    margin-left: 1rem;
 }
 
 .grid-item.SUCCESS {
-    background-color: green;
+    background-color: #66CC66;
+    color: #333;
+}
+
+.grid-item.FAILURE {
+    background-color: red;
 }
 
 .grid-item.NOT_RUN {
     background-color: grey;
 }
 
-.grid-item .title {
-    padding: 1rem;
+.build-grid-item {
+    transition: background-size 5s;
+}
+
+.build-grid-item .title {
+    padding-left: 1rem;
+    font-size: 3rem;
+}
+
+.build-grid-item .build-requestor {
+    position: absolute;
+    bottom: 0;
+    font-size: 2rem;
+    margin-left: 1rem;
+}
+
+.build-grid-item .build-time {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 2rem;
+    margin-right: 1rem;
 }
 
 .grid-item h1, .grid-item h2, .grid-item h3, .grid-item h4, .grid-item h5 {
@@ -30,15 +64,13 @@
     text-overflow: ellipsis;
 }
 
-.build-grid-item .build-title {
-    font-size: 3rem;
-}
-
 .resizer-buttons {
     position: absolute;
     top: 0;
     right: 0;
     opacity: 0;
+    color: #E6E6E6;
+    background-color: #272822;
 }
 
 .resizer-buttons .resizer-button {
@@ -51,8 +83,6 @@
     line-height: 4rem;
     cursor: pointer;
     transition: background-color .75s, color .75s;
-    margin-right: -1px;
-    margin-top: -1px;
 }
 
 .resizer-buttons .resizer-button:hover {

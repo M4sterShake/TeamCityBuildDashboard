@@ -9,13 +9,15 @@
       var orderedServerList = servers.sort(positionComparer); //Create an ordered list of servers based on their position on the dashboard.
       for (var i = 0; i < orderedServerList.length; i++) {
         orderedServerList[i].position = i;
-        var dashboardServer = Object.create(ServerDashboardItem).Init(orderedServerList[i], targetElement, teamCityApi);
+        var dashboardServer = Object.create(ServerDashboardItem).Init(orderedServerList[i], targetElement, teamCityApi, dataStore, this);
         dashboardServer.Show();
         dashboardServers.push(dashboardServer);
       }
       targetElement.packery({
-        itemSelector: '.server-grid-item'
+        itemSelector: '.server-grid-item',
+        transitionDuration: '0.3s'
       });
+      targetElement.css({ opacity: 0, left: "20px" }).animate({ opacity: 1, left: 0 }, 1500, "easeOutQuad");
       // Save the servers now that they definitely have an order;
     });
   }

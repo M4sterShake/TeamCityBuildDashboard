@@ -64,7 +64,149 @@
           }
         }
         if (serverFound === false) {
-          callback({ message: "Unable to find a server with the name '" + server.originalDisplayName + "'" });
+          if (callback) {
+            callback({ message: "Unable to find a server with the name '" + server.originalDisplayName + "'" });
+          }
+        }
+      }
+    });
+  }
+
+  this.UpdateServerSize = function(server, callback) {
+    var serverFound = false;
+    that.GetServers(function (servers) {
+      if (servers != null) {
+        for (var i = 0; i < servers.length && serverFound === false; i++) {
+          if (servers[i].id === server.id) {
+            serverFound = true;
+            servers[i].width = server.width;
+            chrome.storage.sync.set({ 'teamCityServers': servers }, function () {
+              handleErrors(callback);
+            });
+          }
+        }
+        if (serverFound === false) {
+          if (callback) {
+            callback({ message: "Unable to find a server with the name '" + server.originalDisplayName + "'" });
+          }
+        }
+      }
+    });
+  }
+
+  this.UpdateProjectSize = function (server, project, callback) {
+    var serverFound = false;
+    that.GetServers(function (servers) {
+      if (!servers) {
+        if (callback) {
+          callback({ message: "You don't appear to have any saved servers. Go to settings and choose a server to monitor." });
+        }
+        return;
+      }
+      
+      for (var i = 0; i < servers.length && serverFound === false; i++) {
+        if (servers[i].id === server.id) {
+          serverFound = true;
+          if (!servers[i].subscriptions) {
+            if (callback) {
+              callback({ message: "You don't appear have subscribed to any projects for the server named '" + server.name + "'"});
+            }
+            return;
+          }
+
+          var projectFound = false;
+          for (var projectCounter = 0; projectCounter < servers[i].subscriptions.length; projectCounter++) {
+            if (servers[i].subscriptions[projectCounter].id === project.id) {
+              projectFound = true;
+              servers[i].subscriptions[projectCounter].width = project.width;
+              chrome.storage.sync.set({ 'teamCityServers': servers }, function () {
+                if (callback) {
+                  handleErrors(callback);
+                }
+              });
+            }
+          }
+
+          if (projectFound === false) {
+            if (callback) {
+              callback({ message: "Couldnt find the specified project under the server named '" + server.name + "'" });
+            }
+            return;
+          }
+        }
+        if (serverFound === false) {
+          if (callback) {
+            callback({ message: "Unable to find a server with the name '" + server.name + "'" });
+          }
+        }
+      }
+    });
+  }
+
+  this.UpdateBuildSize = function (server, project, build, callback) {
+    var serverFound = false;
+    that.GetServers(function (servers) {
+      if (!servers) {
+        if (callback) {
+          callback({ message: "You don't appear to have any saved servers. Go to settings and choose a server to monitor." });
+        }
+        return;
+      }
+
+      for (var i = 0; i < servers.length && serverFound === false; i++) {
+        if (servers[i].id === server.id) {
+          serverFound = true;
+          if (!servers[i].subscriptions) {
+            if (callback) {
+              callback({ message: "You don't appear have subscribed to any projects for the server named '" + server.name + "'" });
+            }
+            return;
+          }
+
+          var projectFound = false;
+          for (var projectCounter = 0; projectCounter < servers[i].subscriptions.length; projectCounter++) {
+            if (servers[i].subscriptions[projectCounter].id === project.id) {
+              projectFound = true;
+              var buildFound = false;
+              if (!servers[i].subscriptions[projectCounter].builds) {
+                if (callback) {
+                  callback({ message: "You don't appear have subscribed to any builds for the project named '" + project.name + "'" });
+                }
+                return;
+              }
+
+              for (var buildCounter = 0; projectCounter < servers[i].subscriptions[projectCounter].builds.length; buildCounter++) {
+                if (servers[i].subscriptions[projectCounter].builds[buildCounter].id === build.id) {
+                  buildFound = true;
+                  servers[i].subscriptions[projectCounter].builds[buildCounter].width = build.width;
+                  chrome.storage.sync.set({ 'teamCityServers': servers }, function () {
+                    if (callback) {
+                      handleErrors(callback);
+                    }
+                  });
+                }
+              }
+
+              if (buildFound === false) {
+                if (callback) {
+                  callback({ message: "Couldnt find the specified build under the project named '" + project.name + "'" });
+                }
+                return;
+              }
+            }
+          }
+
+          if (projectFound === false) {
+            if (callback) {
+              callback({ message: "Couldnt find the specified build under the server named '" + server.name + "'" });
+            }
+            return;
+          }
+        }
+        if (serverFound === false) {
+          if (callback) {
+            callback({ message: "Unable to find a server with the name '" + server.name + "'" });
+          }
         }
       }
     });
